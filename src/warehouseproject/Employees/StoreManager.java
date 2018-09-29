@@ -1,9 +1,11 @@
 package warehouseproject.Employees;
 
+import warehouseproject.Stores.Store;
+
 public class StoreManager extends Employee implements Managerable{
 
-    public StoreManager(String name, int salary) {
-        super(name, salary);
+    public StoreManager(String name, int salary, Store store) {
+        super(name, salary, store);
     }
 
     @Override

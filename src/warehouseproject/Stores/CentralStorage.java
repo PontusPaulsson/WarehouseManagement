@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class CentralStorage {
 
     public static HashMap<Integer, Integer> centralStorageMap = new HashMap<Integer, Integer>();
+    public static int cash = 100000;
 
     public static void addItem(int id, int amount) {
         centralStorageMap.put(id, amount);
@@ -48,11 +49,11 @@ public class CentralStorage {
         Item brasseStol = new Item("Brasse stol", 4, 199);
         Item parasol = new Item("Parasol", 5, 1599);
 
-        centralStorageMap.put(bultsax.getID(), 10);
-        centralStorageMap.put(toapapper.getID(), 10);
-        centralStorageMap.put(hammare.getID(), 10);
-        centralStorageMap.put(brasseStol.getID(), 10);
-        centralStorageMap.put(parasol.getID(), 10);
+        centralStorageMap.put(bultsax.getID(), 1000);
+        centralStorageMap.put(toapapper.getID(), 1000);
+        centralStorageMap.put(hammare.getID(), 1000);
+        centralStorageMap.put(brasseStol.getID(), 1000);
+        centralStorageMap.put(parasol.getID(), 1000);
 
     }
 
