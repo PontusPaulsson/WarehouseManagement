@@ -4,8 +4,8 @@ import warehouseproject.Employees.Employee;
 import warehouseproject.Exceptions.OutOfStockException;
 import warehouseproject.Items.Item;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Order {
     public static HashMap<Order, Integer> allOrders = new HashMap<>();
@@ -14,6 +14,7 @@ public class Order {
     private int orderId;
     private OrderType orderType;
     private static int nOrders;
+    private LocalDate date;
 
     public Order(Employee employee, OrderType orderType) {
         this.employee = employee;
@@ -21,6 +22,8 @@ public class Order {
         this.orderId = nOrders;
         this.orderType = orderType;
         itemList = new HashMap<>();
+        date = LocalDate.now();
+
     }
 
     public  void addItemToOrder(int itemId, int amount){
@@ -65,21 +68,26 @@ public class Order {
     }
 
     public void printSellerTopList(){
-        ArrayList<Employee> allEmployees = Employee.getEmployeeList();
         HashMap<Employee, Integer> orderTopList = new HashMap<>();
-        for (Employee allEmployee : allEmployees) {
-            orderTopList.put(employee, 0);
-        }
-        //Print stats about order
 
-        for (Order order : allOrders.keySet()) {
+        for(Employee emp : Employee.getEmployeeList()){
+            orderTopList.put(emp, 0);
+        }
+        for(Order order : allOrders.keySet()){
+            orderTopList.replace(order.employee, allOrders.get(order) + orderTopList.get(order.employee));
+        }
+        List<Integer> orderSortedTopList = new ArrayList<>(orderTopList.values());
+        orderSortedTopList.sort((o1, o2) -> o2-o1);
+        for(Integer integer : orderSortedTopList){
             for(Employee emp : orderTopList.keySet()){
-                if(order.employee.getId() == emp.getId()){
-                    orderTopList.replace(order.employee, (orderTopList.get(emp) += allOrders.get(order)));
+                if(integer == orderTopList.get(emp)){
+                    System.out.println(emp.getName() + " - " + integer + "kr");
                 }
             }
-
-
         }
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 }

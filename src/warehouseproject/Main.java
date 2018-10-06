@@ -31,14 +31,28 @@ public class Main {
         årsta.centralItemToStorage(3, 10);
         årsta.centralItemToStorage(4, 10);
 
+        //Move items from CentralStorage to Märsta
+        märsta.centralItemToStorage(1, 20);
+        märsta.centralItemToStorage(2, 20);
+        märsta.centralItemToStorage(3, 20);
+        märsta.centralItemToStorage(4, 20);
+
         //Add sell orders for clerks
         Order camillasOrder = new Order(clerkCamilla, OrderType.SELL);
+        Order pontusOrder = new Order(clerkPontus, OrderType.SELL);
+        Order pontus2Order = new Order(clerkPontus, OrderType.SELL);
         camillasOrder.addItemToOrder(1, 2);
+        pontusOrder.addItemToOrder(2, 10);
+        pontus2Order.addItemToOrder(2, 10);
 
 
         //Execute Order
         camillasOrder.executeOrder();
+        pontusOrder.executeOrder();
+        pontus2Order.executeOrder();
         System.out.println(camillasOrder);
+        System.out.println(pontusOrder);
+        System.out.println(pontus2Order);
 
         //Print Årstacash
         System.out.println("Årsta kassa: " + årsta.getCash());
@@ -48,6 +62,9 @@ public class Main {
 
         //Print all orders
         Order.printAllOrder();
+
+        //Print order toplist
+        camillasOrder.printSellerTopList();
 
     }
 
