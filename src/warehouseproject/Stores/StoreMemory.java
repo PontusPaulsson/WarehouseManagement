@@ -6,7 +6,7 @@ import warehouseproject.Items.Item;
 import warehouseproject.Exceptions.OutOfStockException;
 
 
-public class Store {
+public class StoreMemory implements StoreInterface{
 
     private String storeName;
     private Adress adress;
@@ -15,7 +15,7 @@ public class Store {
 
     public HashMap<Integer, Integer> storage;
 
-    public Store(String storeName, String streetName, String zipCode, String city, String phoneNumber) {
+    public StoreMemory(String storeName, String streetName, String zipCode, String city, String phoneNumber) {
         this.storeName = storeName;
         this.adress = adress;
         storage = new HashMap<Integer, Integer>();
@@ -27,10 +27,11 @@ public class Store {
         for (Integer itemID : storage.keySet()) {
             tempItem = Item.getItemByID(itemID);
             System.out.println("Item " + "[" + itemID + "] " + tempItem.getName() + ", Amount: " + storage.get(itemID));
-
         }
     }
 
+
+    @Override
     public void centralItemToStorage(int itemID, int amount) {
         Item tempItem = Item.getItemByID(itemID);
         try {
@@ -46,12 +47,16 @@ public class Store {
         }
 
     }
-    private void buyItemFromCentralStorage(int itemId, int amount){
+
+    @Override
+    public void buyItemFromCentralStorage(int itemId, int amount){
         Item tempItem = Item.getItemByID(itemId);
         cash -= tempItem.getPrice() * amount;
         CentralStorage.cash += tempItem.getPrice() * amount;
         //Add logic for handling to little money.
     }
+
+    @Override
     public void removeItem(int id, int amount) {
         for (Integer itemID : storage.keySet()) {
             if (itemID == id) {
@@ -60,17 +65,24 @@ public class Store {
 
         }
     }
+
+    @Override
     public void sellItem(int itemId){
         Item tempItem = Item.getItemByID(itemId);
         cash += tempItem.getPrice();
     }
+
+    @Override
     public String getStoreName() {
         return storeName;
     }
 
+    @Override
     public double getCash() {
         return cash;
     }
+
+    @Override
     public boolean checkItemStock(int itemId, int amount) throws OutOfStockException{
         for (Integer itemID : storage.keySet()) {
             if (itemID == itemID) {

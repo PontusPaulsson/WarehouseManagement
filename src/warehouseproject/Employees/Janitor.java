@@ -1,10 +1,10 @@
 package warehouseproject.Employees;
 
-import warehouseproject.Stores.Store;
+import warehouseproject.Stores.StoreMemory;
 
 public class Janitor extends Employee{
 
-    public Janitor(String name, int salary, Store store) {
+    public Janitor(String name, int salary, StoreMemory store) {
         super(name, salary, store);
     }
 

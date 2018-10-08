@@ -26,22 +26,26 @@ public class Order {
 
     }
 
-    public  void addItemToOrder(int itemId, int amount){
+    public boolean addItemToOrder(int itemId, int amount){
         Item tempItem = Item.getItemByID(itemId);
         try{
             if(employee.getStore().checkItemStock(itemId, amount));
             itemList.put(tempItem, amount);
+            return true;
         } catch (OutOfStockException ex){
             System.out.println(ex);
+            return false;
         }
     }
-    public void executeOrder(){
+    public boolean executeOrder(){
         allOrders.put(this, calculateOrderTotal());
         for (Item item : itemList.keySet()) {
             employee.getStore().removeItem(item.getID(), 1);
             employee.getStore().sellItem(item.getID());
+
         }
         System.out.println("Order [" + orderId + "] been added to the database.");
+        return true;
         //Write DB logic here
     }
     private int calculateOrderTotal(){
@@ -61,13 +65,14 @@ public class Order {
     public String toString() {
         return "[" + this.orderId + "] [" + this.orderType + "] by [" + employee.getName() + "] in store [" + employee.getStore().getStoreName() + "] Worth [" + calculateOrderTotal() + "kr]";
     }
+
     public static void printAllOrder(){
         for (Order order : allOrders.keySet()) {
             System.out.println("OrderId [" + order.orderId + "] TotalCost [" + allOrders.get(order) + "]");
         }
     }
 
-    public void printSellerTopList(){
+    public static void printSellerTopList(){
         HashMap<Employee, Integer> orderTopList = new HashMap<>();
 
         for(Employee emp : Employee.getEmployeeList()){

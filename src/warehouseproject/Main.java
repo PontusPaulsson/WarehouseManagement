@@ -4,7 +4,7 @@ import warehouseproject.Employees.Clerk;
 import warehouseproject.Orders.Order;
 import warehouseproject.Orders.OrderType;
 import warehouseproject.Stores.CentralStorage;
-import warehouseproject.Stores.Store;
+import warehouseproject.Stores.StoreMemory;
 
 public class Main {
 
@@ -13,9 +13,9 @@ public class Main {
         CentralStorage.deBugger();
         System.out.println("Centralstorage cash: " + CentralStorage.cash + "kr");
         //Create stores
-        Store bromma = new Store("Bromma", "Repslagarvägen 11", "12032", "Bromma", "08-120120120");
-        Store märsta = new Store("Märsta", "Repslagarvägen 11", "12032", "Märsta", "08-120120120");
-        Store årsta = new Store("Årsta", "Repslagarvägen 11", "12032", "Årsta", "08-120120120");
+        StoreMemory bromma = new StoreMemory("Bromma", "Repslagarvägen 11", "12032", "Bromma", "08-120120120");
+        StoreMemory märsta = new StoreMemory("Märsta", "Repslagarvägen 11", "12032", "Märsta", "08-120120120");
+        StoreMemory årsta = new StoreMemory("Årsta", "Repslagarvägen 11", "12032", "Årsta", "08-120120120");
 
         //Create clerks
         Clerk clerkPontus = new Clerk("Pontus Paulsson", 30000, märsta);
