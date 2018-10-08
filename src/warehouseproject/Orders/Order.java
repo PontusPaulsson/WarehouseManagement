@@ -3,11 +3,14 @@ package warehouseproject.Orders;
 import warehouseproject.Employees.Employee;
 import warehouseproject.Exceptions.OutOfStockException;
 import warehouseproject.Items.Item;
+import warehouseproject.Stores.Store;
+import warehouseproject.Stores.StorageHandling;
 
 import java.time.LocalDate;
 import java.util.*;
 
 public class Order {
+
     public static HashMap<Order, Integer> allOrders = new HashMap<>();
     private HashMap<Item, Integer> itemList;
     private Employee employee;
@@ -15,8 +18,10 @@ public class Order {
     private OrderType orderType;
     private static int nOrders;
     private LocalDate date;
+    private Store store;
 
-    public Order(Employee employee, OrderType orderType) {
+    public Order(Employee employee, OrderType orderType, Store store) {
+        this.store = store;
         this.employee = employee;
         nOrders++;
         this.orderId = nOrders;
@@ -29,7 +34,7 @@ public class Order {
     public boolean addItemToOrder(int itemId, int amount){
         Item tempItem = Item.getItemByID(itemId);
         try{
-            if(employee.getStore().checkItemStock(itemId, amount));
+            if(StorageHandling.checkItemStock(tempItem.getID(), amount, employee.getStore()));
             itemList.put(tempItem, amount);
             return true;
         } catch (OutOfStockException ex){
@@ -40,8 +45,8 @@ public class Order {
     public boolean executeOrder(){
         allOrders.put(this, calculateOrderTotal());
         for (Item item : itemList.keySet()) {
-            employee.getStore().removeItem(item.getID(), 1);
-            employee.getStore().sellItem(item.getID());
+            StorageHandling.removeItem(item.getID(), 1, store);
+            StorageHandling.sellItem(item.getID(), store);
 
         }
         System.out.println("Order [" + orderId + "] been added to the database.");
@@ -63,7 +68,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "[" + this.orderId + "] [" + this.orderType + "] by [" + employee.getName() + "] in store [" + employee.getStore().getStoreName() + "] Worth [" + calculateOrderTotal() + "kr]";
+        return "[" + this.orderId + "] [" + this.orderType + "] by [" + employee.getName() + "] in store [" + store.getStoreName() + "] Worth [" + calculateOrderTotal() + "kr]";
     }
 
     public static void printAllOrder(){

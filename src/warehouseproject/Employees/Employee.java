@@ -1,6 +1,6 @@
 package warehouseproject.Employees;
 
-import warehouseproject.Stores.StoreMemory;
+import warehouseproject.Stores.Store;
 
 import java.util.ArrayList;
 
@@ -11,11 +11,11 @@ public abstract class Employee {
     private static int nEmployees = 0;
     private int salary;
     private int bonus;
-    private StoreMemory store;
+    private Store store;
     
     private static ArrayList<Employee> employeeList = new ArrayList<>();
 
-    public Employee(String name, int salary, StoreMemory store) {
+    public Employee(String name, int salary, Store store) {
         this.name = name;
         this.salary = salary;
         nEmployees++;
@@ -28,7 +28,7 @@ public abstract class Employee {
         return name;
     }
 
-    public StoreMemory getStore() {
+    public Store getStore() {
         return store;
     }
 

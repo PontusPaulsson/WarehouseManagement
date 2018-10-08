@@ -1,10 +1,12 @@
 package warehouseproject.Stores;
 
+import warehouseproject.Utility.Adress;
+
 public class StoreTest {
-    StoreMemory store;
+    Store store;
 
     public StoreTest(){
-        store = new StoreMemory("TestStore", "TestStreet", "100", "TestCity", "100");
+        store = new Store("TestStore", new Adress("TestStreet", "TestZipecode", "TestCity", "TestPhone"), 100);
 
     }
 

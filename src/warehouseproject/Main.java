@@ -3,8 +3,8 @@ package warehouseproject;
 import warehouseproject.Employees.Clerk;
 import warehouseproject.Orders.Order;
 import warehouseproject.Orders.OrderType;
-import warehouseproject.Stores.CentralStorage;
-import warehouseproject.Stores.StoreMemory;
+import warehouseproject.Stores.*;
+import warehouseproject.Utility.Adress;
 
 public class Main {
 
@@ -13,34 +13,34 @@ public class Main {
         CentralStorage.deBugger();
         System.out.println("Centralstorage cash: " + CentralStorage.cash + "kr");
         //Create stores
-        StoreMemory bromma = new StoreMemory("Bromma", "Repslagarvägen 11", "12032", "Bromma", "08-120120120");
-        StoreMemory märsta = new StoreMemory("Märsta", "Repslagarvägen 11", "12032", "Märsta", "08-120120120");
-        StoreMemory årsta = new StoreMemory("Årsta", "Repslagarvägen 11", "12032", "Årsta", "08-120120120");
-
+        Store bromma = new Store("Bromma", new Adress("Bromma", "Bromma", "Bromma", "08-120120120"), 1);
+        Store märsta = new Store("Märsta", new Adress("Märsta", "Märsta", "Märsta", "Märsta"), 2);
+        Store årsta = new Store("Årsta", new Adress("Årsta", "Årsta", "Årsta", "Årsta"), 3);
         //Create clerks
         Clerk clerkPontus = new Clerk("Pontus Paulsson", 30000, märsta);
         Clerk clerkAndreas = new Clerk("Andreas Nedbal", 35000, bromma);
         Clerk clerkCamilla = new Clerk("Camilla Tranberg", 40000, årsta);
 
+
         //Print Årstacash
         System.out.println("Årsta kassa: " + årsta.getCash());
 
         //Move items from CentralStorage to Årsta
-        årsta.centralItemToStorage(1, 10);
-        årsta.centralItemToStorage(2, 10);
-        årsta.centralItemToStorage(3, 10);
-        årsta.centralItemToStorage(4, 10);
+        StorageHandling.moveItemFromCentralStorageToStore(1, 100, årsta);
+        StorageHandling.moveItemFromCentralStorageToStore(2, 100, årsta);
+        StorageHandling.moveItemFromCentralStorageToStore(3, 100, årsta);
+        StorageHandling.moveItemFromCentralStorageToStore(4, 100, årsta);
 
         //Move items from CentralStorage to Märsta
-        märsta.centralItemToStorage(1, 20);
-        märsta.centralItemToStorage(2, 20);
-        märsta.centralItemToStorage(3, 20);
-        märsta.centralItemToStorage(4, 20);
+        StorageHandling.moveItemFromCentralStorageToStore(1, 200, märsta);
+        StorageHandling.moveItemFromCentralStorageToStore(2, 200, märsta);
+        StorageHandling.moveItemFromCentralStorageToStore(3, 200, märsta);
+        StorageHandling.moveItemFromCentralStorageToStore(4, 200, märsta);
 
         //Add sell orders for clerks
-        Order camillasOrder = new Order(clerkCamilla, OrderType.SELL);
-        Order pontusOrder = new Order(clerkPontus, OrderType.SELL);
-        Order pontus2Order = new Order(clerkPontus, OrderType.SELL);
+        Order camillasOrder = new Order(clerkCamilla, OrderType.SELL, årsta);
+        Order pontusOrder = new Order(clerkPontus, OrderType.SELL, märsta);
+        Order pontus2Order = new Order(clerkPontus, OrderType.SELL, märsta);
         camillasOrder.addItemToOrder(1, 2);
         pontusOrder.addItemToOrder(2, 10);
         pontus2Order.addItemToOrder(2, 10);

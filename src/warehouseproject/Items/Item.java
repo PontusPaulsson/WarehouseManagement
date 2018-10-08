@@ -38,8 +38,9 @@ public class Item {
         for (Item item : itemList) {
             if(item.getID() == id){
                 return item;
-            }            
+            }
         }
         return null;
     }
+
 }
